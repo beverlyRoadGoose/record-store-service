@@ -2,48 +2,26 @@ package recordstore
 
 import (
 	"context"
-	"os"
-
-	"github.com/go-kit/kit/log"
 )
 
 type recordStoreService struct{}
-
-var logger log.Logger
-
-func init() {
-	logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
-	logger = log.With(logger, "ts", log.DefaultTimestampUTC)
-}
 
 func NewRecordStoreService() Service {
 	return &recordStoreService{}
 }
 
-/*
- *
- */
-func (r recordStoreService) NewRecord(_ context.Context) {
-	panic("implement me")
+func (r recordStoreService) CreateRecords(_ context.Context) (string, error) {
+	return "Created new record.", nil
 }
 
-/*
- *
- */
-func (r recordStoreService) GetRecords(_ context.Context) {
-	panic("implement me")
+func (r recordStoreService) GetRecords(_ context.Context) (string, error) {
+	return "Records.", nil
 }
 
-/*
- *
- */
-func (r recordStoreService) SellRecords(_ context.Context) {
-	panic("implement me")
+func (r recordStoreService) SellRecords(_ context.Context) (string, error) {
+	return "Records sold.", nil
 }
 
-/*
- *
- */
-func (r recordStoreService) DeleteRecord(_ context.Context) {
-	panic("implement me")
+func (r recordStoreService) DeleteRecords(_ context.Context) (string, error) {
+	return "Records deleted.", nil
 }
