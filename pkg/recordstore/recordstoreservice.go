@@ -2,7 +2,7 @@ package recordstore
 
 import (
 	"context"
-	"heytobi.dev/record-store-service/internal"
+	"heytobi.dev/record-store-service/internal/entities"
 	"heytobi.dev/record-store-service/internal/services/artistsmanager"
 )
 
@@ -12,7 +12,7 @@ func NewRecordStoreService() Service {
 	return &recordStoreService{}
 }
 
-func (r *recordStoreService) CreateArtist(c context.Context, name string) (internal.Artist, error) {
+func (r *recordStoreService) CreateArtist(c context.Context, name string) (entities.Artist, error) {
 	artist, _ := artistsmanager.CreateArtist(name)
 	return artist, nil
 }

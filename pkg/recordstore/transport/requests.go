@@ -1,7 +1,7 @@
 package transport
 
 import (
-	"heytobi.dev/record-store-service/internal"
+	"heytobi.dev/record-store-service/internal/entities"
 )
 
 type CreateArtistRequest struct {
@@ -9,7 +9,7 @@ type CreateArtistRequest struct {
 }
 
 type CreateArtistResponse struct {
-	Artist internal.Artist `json:"artist"`
+	Artist entities.Artist `json:"artist"`
 	Error  string          `json:"error,omitempty"`
 }
 

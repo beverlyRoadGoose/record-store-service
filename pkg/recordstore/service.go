@@ -2,11 +2,11 @@ package recordstore
 
 import (
 	"context"
-	"heytobi.dev/record-store-service/internal"
+	"heytobi.dev/record-store-service/internal/entities"
 )
 
 type Service interface {
-	CreateArtist(c context.Context, name string) (internal.Artist, error)
+	CreateArtist(c context.Context, name string) (entities.Artist, error)
 	GetArtist(c context.Context) (string, error)
 	DeleteArtist(c context.Context) (string, error)
 	CreateRecord(c context.Context) (string, error)
