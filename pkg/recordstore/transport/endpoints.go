@@ -2,6 +2,7 @@ package transport
 
 import (
 	"context"
+	"errors"
 	"github.com/go-kit/kit/endpoint"
 	"heytobi.dev/record-store-service/pkg/recordstore"
 )
@@ -30,7 +31,10 @@ func MakeEndpoints(svc recordstore.Service) Endpoints {
 
 func MakeCreateArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(CreateArtistRequest)
+		req, ok := request.(CreateArtistRequest)
+		if !ok {
+			return nil, errors.New("invalid request")
+		}
 		artist, _ := svc.CreateArtist(ctx, req.Name)
 		return CreateArtistResponse{Artist: artist}, nil
 	}
