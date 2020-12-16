@@ -1,11 +1,16 @@
 package transport
 
+import (
+	"heytobi.dev/record-store-service/internal"
+)
+
 type CreateArtistRequest struct {
+	Name string `json:"name"`
 }
 
 type CreateArtistResponse struct {
-	Response string `json:"response"`
-	Error    string `json:"error,omitempty"`
+	Artist internal.Artist `json:"artist"`
+	Error  string          `json:"error,omitempty"`
 }
 
 type GetArtistRequest struct {

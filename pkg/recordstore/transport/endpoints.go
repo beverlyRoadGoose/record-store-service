@@ -30,9 +30,9 @@ func MakeEndpoints(svc recordstore.Service) Endpoints {
 
 func MakeCreateArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		_ = request.(CreateArtistRequest)
-		response, err := svc.CreateArtist(ctx)
-		return CreateArtistResponse{Response: response}, err
+		req := request.(CreateArtistRequest)
+		artist, _ := svc.CreateArtist(ctx, req.Name)
+		return CreateArtistResponse{Artist: artist}, nil
 	}
 }
 

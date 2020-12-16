@@ -61,7 +61,8 @@ func createRecordsRoutes(e Endpoints, r *mux.Router) {
 }
 
 func decodeCreateNewArtistRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	return CreateArtistRequest{}, nil
+	name := r.FormValue("name")
+	return CreateArtistRequest{Name: name}, nil
 }
 
 func decodeGetArtistRequest(_ context.Context, r *http.Request) (interface{}, error) {
