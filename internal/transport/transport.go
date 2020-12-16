@@ -4,8 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	gkhttp "github.com/go-kit/kit/transport/http"
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"heytobi.dev/record-store-service/internal/errors"
 )
@@ -72,10 +74,10 @@ func createRecordsRoutes(e Endpoints, r *mux.Router, so []gkhttp.ServerOption) {
 }
 
 func decodeCreateNewArtistRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	name := r.FormValue("name")
-	if name == "" {
-		return nil, &errors.BadRequest{Message: "Missing required parameter name"}
+	if err := validateCreateArtistRequest(r); err != nil {
+		return nil, err
 	}
+	name := r.FormValue("name")
 	return CreateArtistRequest{Name: name}, nil
 }
 
@@ -88,7 +90,21 @@ func decodeDeleteArtistRequest(_ context.Context, r *http.Request) (interface{},
 }
 
 func decodeCreateNewRecordRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	return CreateRecordRequest{}, nil
+	if err := validateCreateRecordRequest(r); err != nil {
+		return nil, err
+	}
+
+	artistId := r.FormValue("artistId")
+	artistUuid, _ := uuid.Parse(artistId)
+	name := r.FormValue("name")
+	year := r.FormValue("year")
+	yearInt, _ := strconv.Atoi(year)
+
+	return CreateRecordRequest{
+		ArtistId: artistUuid,
+		Name:     name,
+		Year:     uint(yearInt),
+	}, nil
 }
 
 func decodeGetRecordRequest(_ context.Context, r *http.Request) (interface{}, error) {

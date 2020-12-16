@@ -58,9 +58,12 @@ func MakeDeleteArtistEndpoint(svc internal.Service) endpoint.Endpoint {
 
 func MakeCreateRecordEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		_ = request.(CreateRecordRequest)
-		response, err := svc.CreateRecord(ctx)
-		return CreateRecordResponse{Response: response}, err
+		req, ok := request.(CreateRecordRequest)
+		if !ok {
+			return nil, errors.New("invalid request")
+		}
+		record, err := svc.CreateRecord(ctx, req.ArtistId, req.Name, req.Year)
+		return CreateRecordResponse{Record: record}, err
 	}
 }
 

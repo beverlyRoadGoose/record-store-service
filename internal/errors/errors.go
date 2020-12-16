@@ -8,14 +8,14 @@ type BadRequest struct {
 	Message string
 }
 
-func (r *BadRequest) Error() string {
-	return fmt.Sprintf("%s", r.Message)
+func (e *BadRequest) Error() string {
+	return fmt.Sprintf("%s", e.Message)
 }
 
 type PreconditionFailed struct {
 	Message string
 }
 
-func (r *PreconditionFailed) Error() string {
-	return fmt.Sprintf("%s", r.Message)
+func (e *PreconditionFailed) Error() string {
+	return fmt.Sprintf("%s", e.Message)
 }

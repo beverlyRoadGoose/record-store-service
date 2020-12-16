@@ -1,6 +1,7 @@
 package transport
 
 import (
+	"github.com/google/uuid"
 	"heytobi.dev/record-store-service/internal/entities"
 )
 
@@ -30,11 +31,14 @@ type DeleteArtistResponse struct {
 }
 
 type CreateRecordRequest struct {
+	ArtistId uuid.UUID `json:"artistId"`
+	Name     string    `json:"name"`
+	Year     uint      `json:"year"`
 }
 
 type CreateRecordResponse struct {
-	Response string `json:"response"`
-	Error    string `json:"error,omitempty"`
+	Record entities.Record `json:"record"`
+	Error  string          `json:"error,omitempty"`
 }
 
 type GetRecordRequest struct {
