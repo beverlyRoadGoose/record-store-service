@@ -5,8 +5,8 @@ import (
 )
 
 type Service interface {
-	CreateRecords(c context.Context) (string, error)
-	GetRecords(c context.Context) (string, error)
-	SellRecords(c context.Context) (string, error)
-	DeleteRecords(c context.Context) (string, error)
+	CreateRecord(c context.Context) (string, error)
+	GetRecord(c context.Context) (string, error)
+	SellRecord(c context.Context) (string, error)
+	DeleteRecord(c context.Context) (string, error)
 }

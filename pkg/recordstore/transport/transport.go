@@ -15,42 +15,42 @@ func NewHTTPHandler(e Endpoints) http.Handler {
 	recordsEndpoint := "/records"
 
 	v1SubRouter.Methods("POST").Path(recordsEndpoint).Handler(gkHttp.NewServer(
-		e.CreateRecordsEndpoint,
+		e.CreateRecordEndpoint,
 		decodeCreateNewRecordRequest,
 		encodeResponse))
 
 	v1SubRouter.Methods("GET").Path(recordsEndpoint).Handler(gkHttp.NewServer(
-		e.GetRecordsEndpoint,
-		decodeGetRecordsRequest,
+		e.GetRecordEndpoint,
+		decodeGetRecordRequest,
 		encodeResponse))
 
 	v1SubRouter.Methods("PUT").Path(recordsEndpoint).Handler(gkHttp.NewServer(
-		e.SellRecordsEndpoint,
-		decodeSellRecordsRequest,
+		e.SellRecordEndpoint,
+		decodeSellRecordRequest,
 		encodeResponse))
 
 	v1SubRouter.Methods("DELETE").Path(recordsEndpoint).Handler(gkHttp.NewServer(
-		e.DeleteRecordsEndpoint,
-		decodeDeleteRecordsRequest,
+		e.DeleteRecordEndpoint,
+		decodeDeleteRecordRequest,
 		encodeResponse))
 
 	return router
 }
 
 func decodeCreateNewRecordRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	return CreateRecordsRequest{}, nil
+	return CreateRecordRequest{}, nil
 }
 
-func decodeGetRecordsRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	return GetRecordsRequest{}, nil
+func decodeGetRecordRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	return GetRecordRequest{}, nil
 }
 
-func decodeSellRecordsRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	return SellRecordsRequest{}, nil
+func decodeSellRecordRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	return SellRecordRequest{}, nil
 }
 
-func decodeDeleteRecordsRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	return DeleteRecordsRequest{}, nil
+func decodeDeleteRecordRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	return DeleteRecordRequest{}, nil
 }
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {

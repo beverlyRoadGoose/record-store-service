@@ -7,49 +7,49 @@ import (
 )
 
 type Endpoints struct {
-	CreateRecordsEndpoint endpoint.Endpoint
-	GetRecordsEndpoint    endpoint.Endpoint
-	SellRecordsEndpoint   endpoint.Endpoint
-	DeleteRecordsEndpoint endpoint.Endpoint
+	CreateRecordEndpoint endpoint.Endpoint
+	GetRecordEndpoint    endpoint.Endpoint
+	SellRecordEndpoint   endpoint.Endpoint
+	DeleteRecordEndpoint endpoint.Endpoint
 }
 
 func MakeEndpoints(svc recordstore.Service) Endpoints {
 	return Endpoints{
-		CreateRecordsEndpoint: MakeCreateRecordsEndpoint(svc),
-		GetRecordsEndpoint:    MakeGetRecordsEndpoint(svc),
-		SellRecordsEndpoint:   MakeSellRecordsEndpoint(svc),
-		DeleteRecordsEndpoint: MakeDeleteRecordsEndpoint(svc),
+		CreateRecordEndpoint: MakeCreateRecordEndpoint(svc),
+		GetRecordEndpoint:    MakeGetRecordEndpoint(svc),
+		SellRecordEndpoint:   MakeSellRecordEndpoint(svc),
+		DeleteRecordEndpoint: MakeDeleteRecordEndpoint(svc),
 	}
 }
 
-func MakeCreateRecordsEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeCreateRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		_ = request.(CreateRecordsRequest)
-		response, err := svc.CreateRecords(ctx)
-		return CreateRecordsResponse{Response: response}, err
+		_ = request.(CreateRecordRequest)
+		response, err := svc.CreateRecord(ctx)
+		return CreateRecordResponse{Response: response}, err
 	}
 }
 
-func MakeGetRecordsEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeGetRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		_ = request.(GetRecordsRequest)
-		response, err := svc.GetRecords(ctx)
-		return GetRecordsResponse{Response: response}, err
+		_ = request.(GetRecordRequest)
+		response, err := svc.GetRecord(ctx)
+		return GetRecordResponse{Response: response}, err
 	}
 }
 
-func MakeSellRecordsEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeSellRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		_ = request.(SellRecordsRequest)
-		response, err := svc.SellRecords(ctx)
-		return SellRecordsResponse{Response: response}, err
+		_ = request.(SellRecordRequest)
+		response, err := svc.SellRecord(ctx)
+		return SellRecordResponse{Response: response}, err
 	}
 }
 
-func MakeDeleteRecordsEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeDeleteRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		_ = request.(DeleteRecordsRequest)
-		response, err := svc.DeleteRecords(ctx)
-		return DeleteRecordsResponse{Response: response}, err
+		_ = request.(DeleteRecordRequest)
+		response, err := svc.DeleteRecord(ctx)
+		return DeleteRecordResponse{Response: response}, err
 	}
 }
