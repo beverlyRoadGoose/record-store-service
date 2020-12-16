@@ -7,6 +7,9 @@ import (
 )
 
 type Endpoints struct {
+	CreateArtistEndpoint endpoint.Endpoint
+	GetArtistEndpoint    endpoint.Endpoint
+	DeleteArtistEndpoint endpoint.Endpoint
 	CreateRecordEndpoint endpoint.Endpoint
 	GetRecordEndpoint    endpoint.Endpoint
 	SellRecordEndpoint   endpoint.Endpoint
@@ -15,10 +18,37 @@ type Endpoints struct {
 
 func MakeEndpoints(svc recordstore.Service) Endpoints {
 	return Endpoints{
+		CreateArtistEndpoint: MakeCreateArtistEndpoint(svc),
+		GetArtistEndpoint:    MakeGetArtistEndpoint(svc),
+		DeleteArtistEndpoint: MakeDeleteArtistEndpoint(svc),
 		CreateRecordEndpoint: MakeCreateRecordEndpoint(svc),
 		GetRecordEndpoint:    MakeGetRecordEndpoint(svc),
 		SellRecordEndpoint:   MakeSellRecordEndpoint(svc),
 		DeleteRecordEndpoint: MakeDeleteRecordEndpoint(svc),
+	}
+}
+
+func MakeCreateArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		_ = request.(CreateArtistRequest)
+		response, err := svc.CreateArtist(ctx)
+		return CreateArtistResponse{Response: response}, err
+	}
+}
+
+func MakeGetArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		_ = request.(GetArtistRequest)
+		response, err := svc.GetArtist(ctx)
+		return GetArtistResponse{Response: response}, err
+	}
+}
+
+func MakeDeleteArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		_ = request.(DeleteArtistRequest)
+		response, err := svc.DeleteArtist(ctx)
+		return DeleteArtistResponse{Response: response}, err
 	}
 }
 

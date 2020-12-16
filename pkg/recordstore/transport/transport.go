@@ -12,29 +12,64 @@ import (
 func NewHTTPHandler(e Endpoints) http.Handler {
 	router := mux.NewRouter()
 	v1SubRouter := router.PathPrefix("/api/v1").Subrouter()
-	recordsEndpoint := "/records"
+	createArtistsRoutes(e, v1SubRouter)
+	createRecordsRoutes(e, v1SubRouter)
+	return router
+}
 
-	v1SubRouter.Methods("POST").Path(recordsEndpoint).Handler(gkHttp.NewServer(
+func createArtistsRoutes(e Endpoints, r *mux.Router) {
+	endpoint := "/artists"
+
+	r.Methods("POST").Path(endpoint).Handler(gkHttp.NewServer(
+		e.CreateArtistEndpoint,
+		decodeCreateNewArtistRequest,
+		encodeResponse))
+
+	r.Methods("GET").Path(endpoint).Handler(gkHttp.NewServer(
+		e.GetArtistEndpoint,
+		decodeGetArtistRequest,
+		encodeResponse))
+
+	r.Methods("DELETE").Path(endpoint).Handler(gkHttp.NewServer(
+		e.DeleteArtistEndpoint,
+		decodeDeleteArtistRequest,
+		encodeResponse))
+}
+
+func createRecordsRoutes(e Endpoints, r *mux.Router) {
+	endpoint := "/records"
+
+	r.Methods("POST").Path(endpoint).Handler(gkHttp.NewServer(
 		e.CreateRecordEndpoint,
 		decodeCreateNewRecordRequest,
 		encodeResponse))
 
-	v1SubRouter.Methods("GET").Path(recordsEndpoint).Handler(gkHttp.NewServer(
+	r.Methods("GET").Path(endpoint).Handler(gkHttp.NewServer(
 		e.GetRecordEndpoint,
 		decodeGetRecordRequest,
 		encodeResponse))
 
-	v1SubRouter.Methods("PUT").Path(recordsEndpoint).Handler(gkHttp.NewServer(
+	r.Methods("PUT").Path(endpoint).Handler(gkHttp.NewServer(
 		e.SellRecordEndpoint,
 		decodeSellRecordRequest,
 		encodeResponse))
 
-	v1SubRouter.Methods("DELETE").Path(recordsEndpoint).Handler(gkHttp.NewServer(
+	r.Methods("DELETE").Path(endpoint).Handler(gkHttp.NewServer(
 		e.DeleteRecordEndpoint,
 		decodeDeleteRecordRequest,
 		encodeResponse))
+}
 
-	return router
+func decodeCreateNewArtistRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	return CreateArtistRequest{}, nil
+}
+
+func decodeGetArtistRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	return GetArtistRequest{}, nil
+}
+
+func decodeDeleteArtistRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	return DeleteArtistRequest{}, nil
 }
 
 func decodeCreateNewRecordRequest(_ context.Context, r *http.Request) (interface{}, error) {
