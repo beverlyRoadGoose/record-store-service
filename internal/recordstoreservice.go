@@ -1,4 +1,4 @@
-package recordstore
+package internal
 
 import (
 	"context"

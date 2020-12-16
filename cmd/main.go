@@ -2,16 +2,16 @@ package main
 
 import (
 	"flag"
+	"heytobi.dev/record-store-service/internal"
 	"log"
 	"net/http"
 
-	"heytobi.dev/record-store-service/pkg/recordstore"
-	"heytobi.dev/record-store-service/pkg/recordstore/transport"
+	"heytobi.dev/record-store-service/internal/transport"
 )
 
 func main() {
 	var (
-		service     = recordstore.NewRecordStoreService()
+		service     = internal.NewRecordStoreService()
 		endpoints   = transport.MakeEndpoints(service)
 		httpAddress = flag.String("http.address", ":8080", "HTTP address")
 		httpHandler = transport.NewHTTPHandler(endpoints)

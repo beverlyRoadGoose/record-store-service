@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/go-kit/kit/endpoint"
-	"heytobi.dev/record-store-service/pkg/recordstore"
+	"heytobi.dev/record-store-service/internal"
 )
 
 type Endpoints struct {
@@ -17,7 +17,7 @@ type Endpoints struct {
 	DeleteRecordEndpoint endpoint.Endpoint
 }
 
-func MakeEndpoints(svc recordstore.Service) Endpoints {
+func MakeEndpoints(svc internal.Service) Endpoints {
 	return Endpoints{
 		CreateArtistEndpoint: MakeCreateArtistEndpoint(svc),
 		GetArtistEndpoint:    MakeGetArtistEndpoint(svc),
@@ -29,7 +29,7 @@ func MakeEndpoints(svc recordstore.Service) Endpoints {
 	}
 }
 
-func MakeCreateArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeCreateArtistEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req, ok := request.(CreateArtistRequest)
 		if !ok {
@@ -40,7 +40,7 @@ func MakeCreateArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	}
 }
 
-func MakeGetArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeGetArtistEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		_ = request.(GetArtistRequest)
 		response, err := svc.GetArtist(ctx)
@@ -48,7 +48,7 @@ func MakeGetArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	}
 }
 
-func MakeDeleteArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeDeleteArtistEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		_ = request.(DeleteArtistRequest)
 		response, err := svc.DeleteArtist(ctx)
@@ -56,7 +56,7 @@ func MakeDeleteArtistEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	}
 }
 
-func MakeCreateRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeCreateRecordEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		_ = request.(CreateRecordRequest)
 		response, err := svc.CreateRecord(ctx)
@@ -64,7 +64,7 @@ func MakeCreateRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	}
 }
 
-func MakeGetRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeGetRecordEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		_ = request.(GetRecordRequest)
 		response, err := svc.GetRecord(ctx)
@@ -72,7 +72,7 @@ func MakeGetRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	}
 }
 
-func MakeSellRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeSellRecordEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		_ = request.(SellRecordRequest)
 		response, err := svc.SellRecord(ctx)
@@ -80,7 +80,7 @@ func MakeSellRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
 	}
 }
 
-func MakeDeleteRecordEndpoint(svc recordstore.Service) endpoint.Endpoint {
+func MakeDeleteRecordEndpoint(svc internal.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		_ = request.(DeleteRecordRequest)
 		response, err := svc.DeleteRecord(ctx)
